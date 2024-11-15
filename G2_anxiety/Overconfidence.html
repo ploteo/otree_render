@@ -1,0 +1,89 @@
+{{ block title }}
+    Welcome
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+<p>Before the assessment, answer the questions below on your perceived confidence.
+Please respond honestly and to the best of your ability.</p>
+<form>
+    <h3>How confident do you consider yourself to be on a scale of 1 to 5?</h3>
+
+    <label for="confidence-0">0 </label>
+    <input type="radio" id="confidence-0" name="confidence" value="0">
+    <label for="confidence-1">1</label>
+    <input type="radio" id="confidence-1" name="confidence" value="1">
+    <label for="confidence-2">2</label>
+    <input type="radio" id="confidence-2" name="confidence" value="2">
+    <label for="confidence-3">3</label>
+    <input type="radio" id="confidence-3" name="confidence" value="3">
+    <label for="confidence-4">4</label>
+    <input type="radio" id="confidence-4" name="confidence" value="4">
+        <label for="confidence-5">5 </label>
+    <input type="radio" id="confidence-5" name="confidence" value="5">
+{{ formfield_errors 'confidence' }}
+<br>
+    <i>0=Not confident at all &rarr; 5=Very confident</i><br>
+
+<h3>Do you tend to overestimate your abilities?</h3>
+    <input type="radio" id="overestimate-yes" name="overestimate" value="yes">
+    <label for="overestimate-yes">Yes</label><br>
+    <input type="radio" id="overestimate-no" name="overestimate" value="no">
+    <label for="overestimate-no">No</label><br>
+{{ formfield_errors 'overestimate' }}
+
+<h3>Do you think overconfidence is influenced by gender?</h3>
+    <input type="radio" id="gender_influence-yes" name="gender_influence" value="yes">
+    <label for="gender_influence-yes">Yes</label><br>
+    <input type="radio" id="gender_influence-no" name="gender_influence" value="no">
+    <label for="gender_influence-no">No </label><br>
+{{ formfield_errors 'gender_influence' }}
+
+    <div id="follow-up-question" style="display: none;">
+        <h3>If so, which gender do you think is more
+        overconfident?</h3>
+        <input type="radio" id="gender_overconfident_female" name="gender_overconfident" value="female">
+        <label for="gender_overconfident_female">Female</label><br>
+        <input type="radio" id="gender_overconfident_male" name="gender_overconfident" value="male">
+        <label for="gender_overconfident_male">Male</label><br>
+    </div>
+
+<h3>What grade do you think you will get?</h3>
+    <input type="text" name="grade" id="grade">
+{{ formfield_errors 'grade' }}
+
+</form>
+
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">NEXT</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}
+
+{{ block scripts }}
+    <script>
+        document.querySelectorAll('input[name="gender_influence"]').forEach((elem) => {
+            elem.addEventListener("change", function (event) {
+                var followUpQuestion = document.getElementById("follow-up-question");
+                if (event.target.value === "yes") {
+                    followUpQuestion.style.display = "block";
+                } else {
+                    followUpQuestion.style.display = "none";
+                }
+            });
+        });
+    </script>
+{{ endblock }}

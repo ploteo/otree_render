@@ -1,0 +1,40 @@
+{{ block title }}
+Instructions
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+<p>You will complete a Raven’s Matrices Test to assess your pattern recognition skills.</p>
+
+<p>Each grid has one missing piece: <b>select the correct option from the 8 choices provided.</b></p>
+
+<p>Select the answer you believe is correct by <b>choosing the number of your response.</b></p>
+
+<p>Below you can find an example of what the task will look like:</p>
+ 
+
+<div style="text-align: center;">
+    <img src="{{ static 'R_demo.png' }}" style="width: 60%; height: auto;" />
+</div>
+
+<p>You will have a total time of 4 minutes to complete all matrices.</p>
+
+<p>Press “NEXT” when you’re ready to start.</p>
+
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">NEXT</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}

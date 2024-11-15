@@ -1,0 +1,119 @@
+{{ block content }}
+
+<input type="hidden" name="shoe1" id="id_shoe1">
+<input type="hidden" name="shoe2" id="id_shoe2">
+<input type="hidden" name="shoe3" id="id_shoe3">
+<input type="hidden" name="shoe4" id="id_shoe4">
+<input type="hidden" name="shoe5" id="id_shoe5">
+<input type="hidden" name="shoe6" id="id_shoe6">
+<input type="hidden" name="shoe7" id="id_shoe7">
+<input type="hidden" name="shoe8" id="id_shoe8">
+
+<div class="container box">
+    <p>You have $2000 to spend on shoes in the maximum of 5 minutes.</p>
+    <p>Remaining Budget: $<span id="remaining-budget">2000</span></p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Picture</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" name="shoe1" data-price="{{ prices_1 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_1.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_1 }}</td>
+                {{ formfield_errors 'shoe1' }}
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe2" data-price="{{ prices_2 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_2.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_2 }}</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe3" data-price="{{ prices_3 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_3.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_3 }}</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe4" data-price="{{ prices_4 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_4.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_4 }}</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe5" data-price="{{ prices_5 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_5.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_5 }}</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe6" data-price="{{ prices_6 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_6.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_6 }}</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe7" data-price="{{ prices_7 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_7.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_7 }}</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="shoe8" data-price="{{ prices_8 }}" value="True"></td>
+                <td><img src="{{ static 'Shoe_8.jpg' }}" style="width: 150px;" /></td>
+                <td style="font-size: 24px;">${{ prices_8 }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+        <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Next</button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const remainingBudgetElement = document.getElementById('remaining-budget');
+        let remainingBudget = 2000;
+
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const price = parseFloat(this.getAttribute('data-price'));
+                const hiddenInput = document.getElementById(`id_${this.name}`);
+                if (this.checked) {
+                    remainingBudget -= price;
+                    hiddenInput.value = 'True';
+                } else {
+                    remainingBudget += price;
+                    hiddenInput.value = 'False';
+                }
+                remainingBudgetElement.textContent = remainingBudget.toFixed(2);
+
+                // Change color to red if budget is below zero
+                if (remainingBudget < 0) {
+                    remainingBudgetElement.style.color = 'red';
+                } else {
+                    remainingBudgetElement.style.color = 'black';
+                }
+            });
+        });
+    });
+</script>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+<style>
+    .otree-timer {
+        display: none;
+    }
+</style>
+    
+    {{ endblock }}

@@ -1,0 +1,38 @@
+{{ block title }}
+    Welcome
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+
+<p>Welcome! Thank you for participating.</p>
+
+<p>In this cognitive assessment, you have 4 minutes to answer 15 questions. Your
+grade will range from 18 to 30 based on correct answers, with a corresponding
+prize. Answer as many as you can within the time.</p>
+
+<p>All responses are anonymous, confidential, and used solely for research.
+Participation is voluntary, and you may withdraw anytime. In case of any doubt,
+please raise your hand.</p>
+
+<p>Click “NEXT” to continue when ready</p>
+
+
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">NEXT</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}

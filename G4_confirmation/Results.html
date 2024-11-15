@@ -1,0 +1,77 @@
+{{ block title }}
+   Results (Round {{ player.round_number }} of {{ C.NUM_ROUNDS }})
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+
+<h3>Values</h3>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Round</th>
+            <th scope="col">Value A</th>
+            <th scope="col">Value B</th>
+        </tr>
+    </thead>
+
+{{ for j in table }}
+<tr>
+    {{ for i in j }}
+    <td>
+        {{ if i == player.round_number }}
+        <b>{{ i }}</b>
+        {{ else }}
+        {{ i }}
+        {{ endif }}
+    </td>
+    {{ endfor }}
+</tr>
+{{ endfor }}
+
+</table>
+
+<h3> Summary of your investment in this round</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">A</th>
+            <th scope="col">B</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">Amount you invested</th>
+            <td>{{inv_A}}</td>
+            <td>{{inv_B}}</td>
+        </tr>
+    </tbody>
+</table>
+<p>You bought {{ stocks_A}} units of A and {{ stocks_B}} units of B.</p>
+
+<h3> Portfolio</h2>
+<p>  You own a total of {{ tot_A }} units of A and {{ tot_B }} units of B</p>
+<p>  Thus, your portfolio is worth {{portfolio}}</p>
+
+</div>
+<br>
+<div class="row">
+    <div class="col-md-10 text-end">
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">OK, continue</button>
+    </div>
+</div>
+
+{{ endblock }}
+
+{{ block styles }}
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+{{ endblock }}
+
+
+
+

@@ -1,0 +1,84 @@
+{{ block title }}
+    Welcome
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+{{ if player.condition != "ctrl" }} <!-- Treated -->
+
+<p>Welcome!</p>
+<p>In this experiment, your participation involves making a series of investment choices across 10 rounds in total</p>
+<p>What to Expect:</p>
+<ol>
+    <li>
+Rounds and Investment Options: Each round, you will be given 100€ and presented with two
+investment options. You will decide how to allocate your funds between these options based
+on the information provided.
+    </li>
+    <li>
+News Information: Each round, you will have access to two pieces of news related to the
+investment options. This news may provide insights into potential outcomes for each option.
+You will have the option to not view the news.
+    </li>
+    <li>
+Decision-Making Process: In each round, you will be asked to allocate funds between the two
+investment options according to your judgment and the news provided.
+    </li>
+    <li>
+Privacy and Consent: Your responses will be kept confidential and used solely for research
+purposes. Participation is voluntary, and you may withdraw at any time without penalty.
+    </li>
+</ol>
+<p>By clicking “Agree” below, you consent to participate in this study and understand the conditions
+outlined.</p>
+
+
+
+{{ else }}
+
+<p>Welcome!</p>
+<p>In this experiment, your participation involves making a series of investment choices across 10 rounds in total</p>
+<p>What to Expect:</p>
+<ol>
+    <li>
+    Rounds and Investment Options: Throughout the experiment, you will be be given 100€ and
+    presented with two investment options in each round. You will make investment decisions
+    by choosing how to allocate funds between these options.
+    </li>
+    <li>
+        News Information: Starting in Round 5, you will receive two pieces of news each round that
+        may provide additional insights into the options available. You will have the option to not
+        view the news.
+    </li>
+    <li>
+        Decision-Making Process: In each round, you will decide how to allocate your funds between
+        the options, based on the information provided. There are no right or wrong choices.
+    </li>
+    <li>
+        Privacy and Consent: Your responses and data will remain confidential and will only be used
+        for research purposes. You are free to withdraw from the study at any time without penalty.
+    </li>
+</ol>
+<p>By clicking “Agree” below, you consent to participate in this study and understand the conditions
+    outlined.</p>
+
+{{ endif }}
+
+
+</div>
+
+<div class="row">
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Agree</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}

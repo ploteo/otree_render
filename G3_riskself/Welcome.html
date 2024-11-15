@@ -1,0 +1,56 @@
+{{ block title }}
+ 
+{{ endblock }}
+
+{{ block content }}
+<div class="container box">
+ 
+    <h2>Game Instructions</h2>
+<p>You will see 32 cards face down, with one bomb randomly hidden among them. You need to
+decide how many cards you want to flip, and the software will automatically flip them
+simultaneously.</p>
+
+<p>You start with an initial endowment of 5 euros.</p>
+
+<h2>Game Rules</h2>
+
+<ul>
+    <li>
+<p>If you decide not to flip any cards, you lose your initial endowment of 5 euros.</p>
+    </li>
+    <li>
+If you find the bomb, you lose your initial endowment and receive no reward.
+    </li>
+    <li>
+If you do not find the bomb, your payoff will be 5 euros plus 0.25 euros for each card
+you flipped.
+    </li>
+    
+</ul>
+
+
+<h2>Game Repetition</h2>
+
+<p>The game will be repeated 5 times, with previous results not affecting future ones. Each
+time, you will start with the initial endowment of 5 euros, and payoffs will be calculated the
+same way. Your goal is to earn as much money as possible.</p>
+
+<p>Click on the "Continue" button to start.</p>
+</div>
+
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Continue</button>
+    </div>
+</div>
+{{ endblock }}
+
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}
+
+

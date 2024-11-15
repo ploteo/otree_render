@@ -1,0 +1,258 @@
+{{ block title }}
+    Make your choice (Round {{ player.round_number }} of {{ C.NUM_ROUNDS }})
+{{ endblock }}
+
+{{ block content }}
+<input type="hidden" name="investment_A" id="id_investment_A">
+
+<div class="container box">
+
+{{ if player.round_number < 5 }} 
+
+{{ if player.condition != "ctrl" }} <!-- display only to treated before round 5-->
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-primary" role="alert">
+            {{ news_1 }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-primary" role="alert">
+                {{ news_2 }}
+            </div>
+        </div>
+    </div>
+
+    {{ endif}}
+
+    {{ else }} <!-- display to everyone after roound 4-->
+<button type="button" onclick="toggleNews()" class="btn btn-info">
+    <span style="font-size:120%; color:rgb(255, 255, 255)">Click here to see the news</span>
+</button>
+<br>
+<input type="hidden" id="clicked" name="clicked" value="0">
+
+<div id="myDIV" class="container box" style="font-size: 90%; display: none">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-primary" role="alert">
+                {{ news_1 }}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-primary" role="alert">
+                {{ news_2 }}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
+<button type="button" onclick="myFunction()" class="btn btn-info"> <span
+        style="font-size:100%; color:rgb(255, 255, 255)">Click here to
+        see the news</span></button><br>
+<div id="myDIV" class="container box" style="font-size: 90%; display: none">
+
+<div class="row" id="news_1">
+    <div class="col-md-12">
+        <div class="alert alert-primary" role="alert">
+            {{ news_1 }}
+        </div>
+    </div>
+</div>
+
+<div class="row" id="news_2">
+    <div class="col-md-12">
+        <div class="alert alert-primary" role="alert">
+            {{ news_2 }}
+        </div>
+    </div>
+</div>
+</div><br> -->
+
+{{ endif }}
+
+<i>Click on the slider below and move the pointer that will appear to the investment (to the right more is invested in A and less in B).</i>
+
+    <br>
+<div class="row">
+    <div class="col-md-12"><input type="range" id="id_bel" min="0" max="100" step="1" style="flex-grow: 100"
+            class='not-clicked'></div>
+</div>
+
+<br>
+{{ formfield_errors 'investment_A' }}
+
+<div class="row">
+    <div class="col-md-12">
+        <p>The value I want to invest in <span style="font-weight: bold;">A: </span> <span
+                id="value_investment_A" style="font-size: 100%; font-weight: bold; color: rgb(0, 0, 251)"></span></p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <p>The value I want to invest in <span style="font-weight: bold;">B: </span> <span
+                id="value_investment_B" style="font-size: 100%; font-weight: bold; color: rgb(0, 0, 251)"></span></p>
+    </div>
+</div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-10 text-end">
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">OK, confirm my choice</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+<style>
+    .myclass::-webkit-slider-thumb {
+        box-shadow: 3px 3px 3px #000000;
+        border: 1px solid #b6b6b6;
+        height: 30px !important;
+        width: 30px !important;
+        border-radius: 100px !important;
+        background: rgb(75, 107, 248) !important;
+        cursor: pointer !important;
+        -webkit-appearance: none !important;
+        margin-top: -10px !important;
+        opacity: 0;
+        /* Initially hidden */
+    }
+
+    .myclass.show-thumb::-webkit-slider-thumb {
+        opacity: 1;
+        /* Show when clicked */
+    }
+
+    input[type=range] {
+        background: rgb(232, 232, 232) !important;
+        -webkit-appearance: none;
+        border: 2px solid rgb(75, 107, 248) !important;
+        height: 20px;
+        width: 100%;
+        margin-top: 0px !important;
+    }
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 10.4px;
+    }
+
+    input[type=range]::-moz-range-thumb {
+        box-shadow: 3px 3px 3px #000000;
+        border: 1px solid #b6b6b6;
+        height: 30px !important;
+        width: 30px !important;
+        border-radius: 100px !important;
+        background: rgb(75, 107, 248) !important;
+        cursor: pointer !important;
+        opacity: 0;
+        /* Initially hidden */
+    }
+
+    input[type=range].show-thumb::-moz-range-thumb {
+        opacity: 1;
+        /* Show when clicked */
+    }
+
+    input[type=range]::-ms-thumb {
+        box-shadow: 3px 3px 3px #000000;
+        border: 1px solid #b6b6b6;
+        height: 30px !important;
+        width: 30px !important;
+        border-radius: 100px !important;
+        background: rgb(75, 107, 248) !important;
+        cursor: pointer !important;
+        opacity: 0;
+        /* Initially hidden */
+    }
+
+    input[type=range].show-thumb::-ms-thumb {
+        opacity: 1;
+        /* Show when clicked */
+    }
+</style>
+
+{{ endblock }}
+
+{{ block scripts }}
+
+<!-- <script>
+    function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "block") {
+            x.style.display = "none";
+        } else {
+            x.style.display = "block";
+        }
+    }
+</script> -->
+
+
+<script>
+    function toggleNews() {
+        var newsDiv = document.getElementById("myDIV");
+        var clicked = document.getElementById("clicked");
+
+        if (newsDiv.style.display === "none") {
+            newsDiv.style.display = "block";
+            clicked.value = "1";
+            localStorage.setItem("buttonClicked", "true");
+        } else {
+            newsDiv.style.display = "none";
+            localStorage.setItem("buttonClicked", "false");
+        }
+    }
+
+    window.onload = function () {
+        if (localStorage.getItem("buttonClicked") === "true") {
+            document.getElementById("myDIV").style.display = "block";
+            document.getElementById("clicked").value = "1";
+        }
+    }
+</script>
+
+<script>
+
+
+    $(document).ready(function () {
+        $('input[type=range]').addClass('myclass'); // Ensure the myclass is added initially
+
+        $('input[type=range]').on('mousedown touchstart', function () {
+            $(this).addClass('show-thumb');
+        });
+
+        $('input[type=range]').on('mouseup touchend', function () {
+            $(this).addClass('show-thumb'); // Keep the thumb visible after releasing
+        });
+
+        $('input[type=range]').on('input change', function () {
+            var valueA = parseFloat($(this).val());
+            var valueB = 100 - valueA;
+
+            $(this).addClass('show-thumb'); // Ensure the thumb is visible
+
+            $("#value_investment_A").html(valueA + "%");
+            $("#id_investment_A").val(valueA);
+
+            $("#value_investment_B").html(valueB + "%");
+            $("#id_investment_B").val(valueB);
+        });
+    });
+</script>
+
+{{ endblock }}

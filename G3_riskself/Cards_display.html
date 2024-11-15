@@ -1,0 +1,137 @@
+{{ block title }}
+Your cards (Round {{ player.round_number }} of {{ C.NUM_ROUNDS }})
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+    <p>You decided to turn {{ cards_flipped }} cards.</p>
+    {% if bomb_found %}
+    <p>Unfortunately, you found the bomb...</p>
+    <p>Accordingly, your payoff is {{ payoff }} </p>
+    {% else %}
+    <p>Congratulations! You did not find the bomb.</p>
+    <p>Accordingly, your payoff is {{ payoff }} </p>
+    {% endif %}
+
+    <div class="cards-container">
+        {% for i in range(1, 33) %}
+        <div class="card" id="card-{{ i }}">
+            <div class="card-inner">
+                <div class="card-front centered">
+                    <img src="{{ static 'card_back.png' }}" alt="Card Back" style="width: 75px; height: 90px;">
+                </div>
+                <div class="card-back centered">
+                    {% if i == bomb_position %}
+                    <img src="{{ static 'bomb.png' }}" alt="Bomb" style="width: 75px; height: 80px;">
+                    {% else %}
+                    <img src="{{ static 'smiley.png' }}" alt="Smiley" style="width: 75px; height: 80px;">
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">OK, continue</button>
+    </div>
+</div>
+
+<audio id="bomb-sound" src="{% static 'bomb_sound.mp3' %}" preload="auto"></audio>
+
+{{ endblock }}
+
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+<style>
+    .centered {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    .cards-container {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        gap: 10px;
+    }
+
+    .card {
+        perspective: 1000px;
+    }
+
+    .card-inner {
+        position: relative;
+        width: 75px;
+        height: 90px;
+        transform-style: preserve-3d;
+        transition: transform 0.6s;
+    }
+
+    .card.flipped .card-inner {
+        transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    .card-back {
+        transform: rotateY(180deg);
+    }
+</style>
+
+{{ endblock }}
+
+{{ block scripts }}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const cardsFlipped = {{ cards_flipped| safe
+    }};
+    const bombPosition = {{ bomb_position| safe }};
+    const cards = document.querySelectorAll('.card');
+    const bombSound = document.getElementById('bomb-sound');
+
+    let flipCount = 0;
+
+    function flipCard(card) {
+        card.classList.add('flipped');
+        if (card.id === `card-${bombPosition}`) {
+            bombSound.play();
+            changeAllSmileysToUnhappy();
+        }
+    }
+
+    function flipNextCard() {
+        if (flipCount < cardsFlipped) {
+            flipCard(cards[flipCount]);
+            flipCount++;
+            setTimeout(flipNextCard, 500); // Adjust the delay as needed
+        }
+    }
+
+    function changeAllSmileysToUnhappy() {
+        const smileyImages = document.querySelectorAll('.card-back img[alt="Smiley"]');
+        smileyImages.forEach(img => {
+            img.src = "{{ static 'unhappy.png' }}";
+            img.alt = "Unhappy";
+        });
+    }
+
+    flipNextCard();
+    });
+</script>
+
+{{ endblock }}

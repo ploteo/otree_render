@@ -1,0 +1,44 @@
+{{ block title }}
+    Welcome
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+<p>In this experiment, you will make investment decisions between two options:
+Option A and Option B. Each option has distinct characteristics in terms of
+risk and potential returns.</p>
+
+<p>Investment Options Overview</p>
+
+<ul>
+    <li>
+<b>Option A:</b> This is a low-volatility investment, meaning it experiences fewer
+fluctuations in value. It is a stable choice, appealing to investors who prioritize
+consistent returns and lower risk exposure.
+    </li>
+    <li>
+<b>Option B:</b> This is a high-volatility investment, which means it is more prone to
+value changes and offers the potential for higher returns. It is suited for investors
+who are comfortable with market fluctuations.
+    </li>
+</ul>
+
+
+
+
+</div>
+
+<div class="row">
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Agree</button>
+    </div>
+</div>
+
+{{ endblock }}
+
+{{ block styles }}
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+{{ endblock }}

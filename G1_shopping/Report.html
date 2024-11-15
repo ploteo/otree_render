@@ -1,0 +1,35 @@
+{{ block title }}
+   Report the number
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+<div style="text-align: center;">
+<p>Please report the number you saw in the previous screen</p>
+
+<div style="text-align: center;">
+    {{ formfield 'report' label="" }}
+</div>
+
+{{ formfield_errors 'report' }}
+</div>
+
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+        <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">OK, continue</button>
+    </div>
+</div>
+
+{{ endblock }}
+
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}

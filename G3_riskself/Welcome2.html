@@ -1,0 +1,49 @@
+{{ block title }}
+ 
+{{ endblock }}
+
+{{ block content }}
+<div class="container box">
+<h2>Trust game instructions</h2>
+<p>You will now participate in the Trust Game. In this game, you will be randomly paired with
+another participant: one of you will be randomly selected to play as the Investor and the
+other as the Trustee.</p>
+<h2>Investor Role</h2>
+As the Investor, you will start with an initial amount of 10 euros. Then you will decide how
+much money to send to the Trustee. The Trustee will receive that amount already multiplied
+by 3 from the experimenter (e.g. if you choose to send X euros, the Trustee will receive 3X
+euros).
+<h2>Trustee Role</h2>
+As the Trustee, you will decide how much money to send back to the Investor”
+<h2>Payoffs</h2>
+<ul>
+    <li>
+Investor Payoff: Amount kept + amount received back from the Trustee
+    </li>
+    <li>
+Trustee Payoff: Amount received - amount sent back to the Investor
+    </li>
+</ul> 
+
+<p>In the following pages, you will be asked to make choices, both as Investor and Trustee.
+Then, the game will be played according to the choices made.</p>
+
+<p>Click on the "Continue" button to start.</p>
+</div>
+
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Continue</button>
+    </div>
+</div>
+{{ endblock }}
+
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}
+
+

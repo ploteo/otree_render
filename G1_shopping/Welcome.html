@@ -1,0 +1,43 @@
+{{ block title }}
+    Welcome
+{{ endblock }}
+
+{{ block content }}
+
+<div class="container box">
+
+<p>Thank you for joining us today. We are students from the Behavioral Economics class, and our goal is to study the
+relationship between emotions and purchasing decisions.</p>
+
+<p>There are two phases in this experiment:</p>
+
+<ol>
+    <li>
+<p>In the first phase, you will complete a memory task where you’ll be asked to recall a sequence of numbers. Before and
+after the task, you will be asked to rate your mood.</p>
+    </li>
+    <li>
+<p>In the second phase, you will receive a virtual budget to spend on our products. You’ll choose how to allocate your
+budget across different options.</p>
+    </li>
+</ol>
+
+<p>Thank you again for your participation! Click next if you’re ready for the experiment.</p>
+
+
+</div>
+
+<div class="row">
+    <br>
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Next</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}

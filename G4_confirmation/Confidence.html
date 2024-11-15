@@ -1,0 +1,28 @@
+{{ block title }}
+Confidence
+{{ endblock }}
+
+{{ block content }}
+<div class="container box">
+
+    <p> You just invested {{ inv_A}}% of your endowment in A (and {{inv_B}}% in B) </p>
+
+<p> How confident are you in your decision? (1 = Not at all; 7 = Completely)</p>
+
+{{ formfield 'confidence' }}
+
+{{ formfield_errors 'confidence' }}
+</div>
+<div class="row">
+    <div class="col-md-10 text-end">
+            <br>
+        <button id="btn_submit" class="btn btn-outline-primary btn-lg">Ok, continue</button>
+    </div>
+</div>
+
+{{ endblock }}
+{{ block styles }}
+
+<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
+
+{{ endblock }}
