@@ -6,36 +6,7 @@
 
 <div class="container box">
 
-
-<h3>Values</h3>
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Round</th>
-            <th scope="col">Value A</th>
-            <th scope="col">Value B</th>
-        </tr>
-    </thead>
-
-{{ for j in table }}
-<tr>
-    {{ for i in j }}
-    <td>
-        {{ if i == player.round_number }}
-        <b>{{ i }}</b>
-        {{ else }}
-        {{ i }}
-        {{ endif }}
-    </td>
-    {{ endfor }}
-</tr>
-{{ endfor }}
-
-</table>
-
-<h3> Summary of your investment in this round</h2>
+<h3> Summary of your investment</h2>
 <table class="table">
     <thead>
         <tr>
@@ -50,13 +21,15 @@
             <td>{{inv_A}}</td>
             <td>{{inv_B}}</td>
         </tr>
+        <tr>
+            <th scope="row">Values</th>
+            <td>{{value_A}} %</td>
+            <td>{{value_B}} %</td>
+        </tr>
     </tbody>
 </table>
-<p>You bought {{ stocks_A}} units of A and {{ stocks_B}} units of B.</p>
 
-<h3> Portfolio</h2>
-<p>  You own a total of {{ tot_A }} units of A and {{ tot_B }} units of B</p>
-<p>  Thus, your portfolio is worth {{portfolio}}</p>
+<p>Thus, your payoff is {{ payoff }} </p>
 
 </div>
 <br>

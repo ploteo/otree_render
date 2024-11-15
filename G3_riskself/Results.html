@@ -1,46 +1,10 @@
 {{ block title }}
-Results
+    Page title
 {{ endblock }}
 
 {{ block content }}
 
-<div class="container box">
-
-<p>Yur role was {{ player.role }}.</p>
-
-{{ if player.role == "Trustor"}}
-
-<p>You decide to send to the other {{ trustor_sent }} tokens.</p>
-
-<p>The other sent you back {{ trustee_returned }} tokens.</p>
-
-<p>Thus, you earn {{ player.payoff }} tokens.</p>
-
-{{ else }}
-
-<p>The other decided to send you {{ trustor_sent }} tokens.</p>
-
-<p>You sent back {{ trustee_returned }} tokens.</p>
-
-<p>Thus, you earn {{ player.payoff }} tokens.</p>
-
-{{ endif}}
-
-</div>
-
-
-<div class="row">
-    <br>
-    <div class="col-md-10 text-end">
-        <button id="btn_submit" class="btn btn-outline-primary btn-lg">OK, conclude</button>
-    </div>
-</div>
-
+    {{ next_button }}
 {{ endblock }}
 
 
-{{ block styles }}
-
-<link rel="stylesheet" href="{% static 'global/mystyle.css' %}" />
-
-{{ endblock }}

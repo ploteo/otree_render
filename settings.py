@@ -2,24 +2,9 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-    name='G1_shopping',
-    app_sequence=['G1_shopping'],
-    num_demo_participants=4,
-    ),
-    dict(
-    name='G2_anxiety',
-    app_sequence=['G2_anxiety'],
-    num_demo_participants=2,
-    ),
-    dict(
-    name='G3_riskself',
-    app_sequence=['G3_riskself'],
-    num_demo_participants=2,
-    ),
-    dict(
-    name='G4_confirmation',
-    app_sequence=['G4_confirmation'],
-    num_demo_participants=3,
+        name='G4_confirmation',
+        app_sequence=['G4_confirmation'],
+        num_demo_participants=3,
     ),
 ]
 
@@ -32,7 +17,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = ["expiry"]
+PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 
 # ISO-639 code
@@ -50,10 +35,3 @@ ADMIN_PASSWORD = environ.get('OTREE_ADMIN_PASSWORD')
 DEMO_PAGE_INTRO_HTML = """ """
 
 SECRET_KEY = '6001696908734'
-
-ROOMS = [
-    dict(name='open_room_1', display_name='Room for live 1 (no participant labels)'),
-	 dict(name='open_room_2', display_name='Room for live 2 (no participant labels)'),
-        dict(name='open_room_3', display_name='Room for live 3 (no participant labels)'),   
-        dict(name='open_room_4', display_name='Room for live 4 (no participant labels)')
-]

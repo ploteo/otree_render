@@ -7,6 +7,7 @@
 
 <div class="container box">
 
+
 {{ if player.round_number < 5 }} 
 
 {{ if player.condition != "ctrl" }} <!-- display only to treated before round 5-->
@@ -30,50 +31,15 @@
     {{ endif}}
 
     {{ else }} <!-- display to everyone after roound 4-->
-<button type="button" onclick="toggleNews()" class="btn btn-info">
-    <span style="font-size:120%; color:rgb(255, 255, 255)">Click here to see the news</span>
-</button>
-<br>
-<input type="hidden" id="clicked" name="clicked" value="0">
 
-<div id="myDIV" class="container box" style="font-size: 90%; display: none">
     <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-primary" role="alert">
-                {{ news_1 }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-primary" role="alert">
-                {{ news_2 }}
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 
-<button type="button" onclick="myFunction()" class="btn btn-info"> <span
-        style="font-size:100%; color:rgb(255, 255, 255)">Click here to
-        see the news</span></button><br>
-<div id="myDIV" class="container box" style="font-size: 90%; display: none">
-
-<div class="row" id="news_1">
-    <div class="col-md-12">
-        <div class="alert alert-primary" role="alert">
+        <div class="col-md-6">
             {{ news_1 }}
         </div>
-    </div>
-</div>
-
-<div class="row" id="news_2">
-    <div class="col-md-12">
-        <div class="alert alert-primary" role="alert">
+        <div class="col-md-6">
             {{ news_2 }}
         </div>
     </div>
-</div>
-</div><br> -->
 
 {{ endif }}
 
@@ -191,44 +157,7 @@
 
 {{ block scripts }}
 
-<!-- <script>
-    function myFunction() {
-        var x = document.getElementById("myDIV");
-        if (x.style.display === "block") {
-            x.style.display = "none";
-        } else {
-            x.style.display = "block";
-        }
-    }
-</script> -->
-
-
 <script>
-    function toggleNews() {
-        var newsDiv = document.getElementById("myDIV");
-        var clicked = document.getElementById("clicked");
-
-        if (newsDiv.style.display === "none") {
-            newsDiv.style.display = "block";
-            clicked.value = "1";
-            localStorage.setItem("buttonClicked", "true");
-        } else {
-            newsDiv.style.display = "none";
-            localStorage.setItem("buttonClicked", "false");
-        }
-    }
-
-    window.onload = function () {
-        if (localStorage.getItem("buttonClicked") === "true") {
-            document.getElementById("myDIV").style.display = "block";
-            document.getElementById("clicked").value = "1";
-        }
-    }
-</script>
-
-<script>
-
-
     $(document).ready(function () {
         $('input[type=range]').addClass('myclass'); // Ensure the myclass is added initially
 

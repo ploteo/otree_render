@@ -1,12 +1,13 @@
 import random
 from otree.api import *
 
+
 doc = """
 rounds 1-4 treated with different info; rounds 5-10 the make an investment choice
 
-
+TODO: when does the news happen? before the investment choice or after?
 TODO: The values of the two stocks are not realistic, same expected 
-
+TODO: Work on feedback and computation of the payoff
 
 """
 
@@ -17,15 +18,14 @@ class C(BaseConstants):
     NUM_ROUNDS = 10
     #------------------------------------------------
     # the return and standard deviation of the two assets
-    A_VALUE = [22, 24, 27, 29, 28, 30, 29, 31, 32, 30]
-    B_VALUE = [22, 25, 29, 31, 27, 34, 29, 35, 31, 30 ]
+    A_value = [22, 24, 27, 29, 28, 30, 29, 31, 32, 30]
+    B_value = [22, 25, 29, 31, 27, 34, 29, 35, 31, 30 ]
     #------------------------------------------------
     # INFO GIVEN TO THE GROUPS (should be the same after round 5)
-    info_risky = [
-        ["Analysts are impressed by Option B’s rapid growth potential, noting it has recently delivered impressive returns. This option attracts investors looking for strong, short-term gains.","According to financial reports, Option B is an exciting choice for high-reward seekers. With its dynamic performance, it’s positioned to provide excellent returns for those willing to embrace its higher risk."],
-        ["Economic forecasts show Option B as a top choice for growth, with analysts pointing to its potential for sizable gains. Investors seeking an edge in a dynamic market find Option B very appealing.","Market observers highlight Option B’s capacity for rapid value increase, making it ideal for investors aiming for substantial profit. Though it fluctuates, the potential for high returns draws interest."],
-        ["Investment specialists note Option B as a favored choice for high returns, even with its market swings. Those with a bold approach to investing may find it especially rewarding.","According to recent analysis, Option B is set to provide strong returns in growth-driven sectors. Investors who prioritize profits over stability are likely to benefit from its aggressive potential."],
-        ["Recent studies underscore Option B as a leading option for those open to higher risk, showing great promise in fast-growing markets. The payoff potential makes it highly attractive to growth-focused investors.","Reports suggest that Option B could be a prime choice for substantial gains in the near term, despite its fluctuations. It’s ideal for investors who are prepared to accept risk for the chance of higher returns."]              
+    info_risky = [["Analysts are impressed by Option B’s rapid growth potential, noting it has recently delivered impressive returns. This option attracts investors looking for strong, short-term gains.","According to financial reports, Option B is an exciting choice for high-reward seekers. With its dynamic performance, it’s positioned to provide excellent returns for those willing to embrace its higher risk."],
+                  ["Economic forecasts show Option B as a top choice for growth, with analysts pointing to its potential for sizable gains. Investors seeking an edge in a dynamic market find Option B very appealing.","Market observers highlight Option B’s capacity for rapid value increase, making it ideal for investors aiming for substantial profit. Though it fluctuates, the potential for high returns draws interest."],
+                  ["Investment specialists note Option B as a favored choice for high returns, even with its market swings. Those with a bold approach to investing may find it especially rewarding.","According to recent analysis, Option B is set to provide strong returns in growth-driven sectors. Investors who prioritize profits over stability are likely to benefit from its aggressive potential."],
+                  ["Recent studies underscore Option B as a leading option for those open to higher risk, showing great promise in fast-growing markets. The payoff potential makes it highly attractive to growth-focused investors.""Reports suggest that Option B could be a prime choice for substantial gains in the near term, despite its fluctuations. It’s ideal for investors who are prepared to accept risk for the chance of higher returns."]              
                   ]
     info_safe = [
             ["Analysts describe Option A as a safe and stable investment, providing peace of mind to cautious investors. Its steady returns make it a strong choice for those who avoid market turbulence.","According to experts, Option A’s low-risk profile suits investors who prioritize financial security. With its consistent performance, Option A is favored by those who prefer gradual, reliable growth."], 
@@ -56,14 +56,10 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     condition = models.CharField() # in which condition the player is
     investment_A = models.IntegerField() # if the player chooses A
-    stocks_A = models.FloatField() # the number of stocks of A
-    stocks_B = models.FloatField() # the number of stocks of B
+    ret_A = models.FloatField() # return of asset A
+    ret_B = models.FloatField() # return of asset B
     confidence = models.IntegerField(choices=range(1,8,1),widget=widgets.RadioSelectHorizontal) # how confident the player is
-    risk = models.IntegerField(choices=range(1,11,1),widget=widgets.RadioSelectHorizontal) # how risky the player is
-    tot_A = models.FloatField() # the total number of stocks of A
-    tot_B = models.FloatField() # the total number of stocks of B
-    portfolio = models.FloatField() # the value of the portfolio
-    clicked = models.BooleanField(initial=False,blank=True) # if the player clicked on the button to see the instructions
+    returns = models.FloatField() # the returns of the player
 
 # FUNCTIONS
 
@@ -78,33 +74,23 @@ def creating_session(subsession: Subsession):
 
 # compute the payoffs
 def compute_payoffs(player: Player):
-    player.stocks_A = player.investment_A/C.A_VALUE[player.round_number-1]
-    player.stocks_B = (100-player.investment_A)/C.B_VALUE[player.round_number-1]
-    # sum of stocks A in previous rounds
-    stocks_A_prev = sum([p.stocks_A for p in player.in_previous_rounds()])
-    stocks_B_prev = sum([p.stocks_B for p in player.in_previous_rounds()])
-    # compute the returns
-    player.payoff = player.stocks_A*C.A_VALUE[player.round_number-1]+player.stocks_B*C.B_VALUE[player.round_number-1]
-    # compute the portfolio
-    player.tot_A = player.stocks_A+stocks_A_prev
-    player.tot_B = player.stocks_B+stocks_B_prev
-    player.portfolio = player.tot_A*C.A_VALUE[player.round_number-1]+player.tot_B*C.B_VALUE[player.round_number-1]
+    player.payoff = player.investment_A*100
 
 # PAGES
 class Welcome(Page):
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number == 1
+    pass
 
 class Investment_info(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
 
+class News(Page):
+    pass
 
 class Choice(Page):
     form_model = 'player'
-    form_fields = ['investment_A','clicked']
+    form_fields = ['investment_A']
     @staticmethod
     def vars_for_template(player: Player):
         if player.round_number < 5:
@@ -125,12 +111,12 @@ class Choice(Page):
                 )
         else:
             return dict(
-                news_1 = C.info_ctrl[player.round_number-5][0], # the same for all players
-                news_2 = C.info_ctrl[player.round_number-5][1]
+                news = C.info_ctrl[player.round_number-5] # the same for all players
             )
             
     def before_next_page(player: Player, timeout_happened):
         compute_payoffs(player)
+        print(player.payoff)
         #player.payoff=player.investment_A*(1+player.ret_A)+(100-player.investment_A)*(1+player.ret_B)
 
 class Confidence(Page):
@@ -144,14 +130,6 @@ class Confidence(Page):
             inv_B = inv_B
         )
 
-class RiskAssessment(Page):
-    form_model = 'player'
-    form_fields = ['risk']
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS    
-
-
 
 class ResultsWaitPage(WaitPage):
     pass
@@ -162,24 +140,13 @@ class Results(Page):
     def vars_for_template(player: Player):
         inv_A = player.investment_A
         inv_B = 100 - player.investment_A
-        #  History
-        t = []
-        for j in range(0, (player.round_number)):  # start from 
-            t.append([j+1])#round
-            t[j].append(C.A_VALUE[j])#value_A
-            t[j].append(C.B_VALUE[j])#value B
-        print(t)
         return dict(
-            table = t,
             inv_A = inv_A,
             inv_B = inv_B,
-            stocks_A = round(player.stocks_A,2),
-            stocks_B = round(player.stocks_B,2),
-            payoff = player.payoff,
-            portfolio = round(player.portfolio,2),
-            tot_A = round(player.tot_A, 2),
-            tot_B = round(player.tot_B, 2)
+            value_A = C.A_value[player.round_number-1],
+            value_B = C.A_value[player.round_number-1],
+            payoff = player.payoff
         )
 
 
-page_sequence = [Welcome, Investment_info, Choice, Confidence, Results, RiskAssessment]
+page_sequence = [Welcome, Investment_info, Choice, Confidence, Results]
